@@ -1,0 +1,24 @@
+{
+  "name": "ethereum",
+  "version": "1.0.0",
+  "main": "ethereum.js",
+  "dependencies": {
+    "cowsay": "^1.5.0",
+    "ethereumjs-tx": "^2.1.2",
+    "events": "^3.3.0",
+    "express": "^4.17.1",
+    "loadash": "^1.0.0",
+    "minimist": "^1.2.5",
+    "node-fetch": "^3.0.0",
+    "npm-check-updates": "^11.8.5",
+    "web3": "^1.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
