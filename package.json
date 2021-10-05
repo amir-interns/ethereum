@@ -1,17 +1,21 @@
 {
   "name": "ethereum",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "main": "ethereum.js",
   "dependencies": {
+    "bitcoin-core": "^3.0.0",
     "cowsay": "^1.5.0",
     "ethereumjs-tx": "^2.1.2",
     "events": "^3.3.0",
     "express": "^4.17.1",
+    "hbs": "^4.1.2",
+    "json": "^11.0.0",
     "loadash": "^1.0.0",
     "minimist": "^1.2.5",
     "node-fetch": "^3.0.0",
     "npm-check-updates": "^11.8.5",
-    "web3": "^1.5.2"
+    "web3": "^1.5.2",
+    "web3-eth-contract": "^1.6.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -20,5 +24,13 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steppenwolf09/ethereum.git"
+  },
+  "bugs": {
+    "url": "https://github.com/steppenwolf09/ethereum/issues"
+  },
+  "homepage": "https://github.com/steppenwolf09/ethereum#readme",
   "description": ""
 }

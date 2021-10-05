@@ -41,12 +41,14 @@ else{
 }
 
 
-async function sendTrans(){
+function sendTrans(){
 
     promit=web3.eth.accounts.signTransaction(rawTx, '0xdb9dfc6391e28d274cfd465074e388705be20db4fbf2fc2f4808c8c9e69e58c8').then((signedTx) => {
         web3.eth.sendSignedTransaction( signedTx.rawTransaction ,function(err, hash) {
           if (!err) {
+
              setTimeout(checkTr, 20000, hash)
+//                console.log(hash)
           }
           else {
             console.log(err);
@@ -57,41 +59,84 @@ async function sendTrans(){
 
 }
 
-//checkTr('0x5ed3711cad30446cdf52123dfb5bf77aa7625c4bb6d48c92351da137e25f9b38')
+
 
 function checkTr(blhash){
-    var valueBl=0
-    const socket=new wscat ('wss://ropsten.infura.io/ws/v3/672b38a3e2d746f5bd5f24396cb048e9')
-        //request_data ='{ "jsonrpc": "2.0", "method": "eth_blockNumber", "params": [], "id": 1}'
-    request_data =' {"jsonrpc":"2.0", "id": 1, "method": "eth_subscribe", "params": ["newHeads"]}'
-
+    var valTr=0
     var res=web3.eth.getTransactionReceipt(blhash).then((value)=>{
-        var valTr=parseInt(value.blockNumber)
-        socket.on("open", function open() {
-            socket.send(request_data);
-    });
+        valTr=parseInt(value.blockNumber)
 
-       socket.on("message", function incoming(message) {
-            var mes=JSON.parse(message)
-            var params=mes['params']
-            console.log(valTr)
-            try{
-               valueBl=params['result']['number']
 
-                val_current_bl=parseInt(valueBl,16)
-                console.log(val_current_bl, valTr )
-                console.log(val_current_bl-valTr )
-                if (val_current_bl-valTr >= 3) {
+    const w3=new Web3('wss://ropsten.infura.io/ws/v3/672b38a3e2d746f5bd5f24396cb048e9')
+    let options = {
+        fromBlock: 0,
+        blockNumber:blhash,
+        topics: []
+    };
+
+    let subscription = w3.eth.subscribe('logs', options,(err,event) => {
+        if (!err){
+            var val_current_bl=event['blockNumber']
+//            val_current_bl=parseInt(blNumber)
+            console.log(val_current_bl, valTr )
+            console.log(val_current_bl-valTr )
+             if (val_current_bl-valTr >= 3) {
                     console.log("Success!")
                 }
-            }
-            catch{
+
+            else{
                 console.log('Идет проверка...')
             }
-            });
-
+        }
     })
+  })
 }
+
+
+//checkTr('0x5ed3711cad30446cdf52123dfb5bf77aa7625c4bb6d48c92351da137e25f9b38')
+
+//function checkTr(blhash){
+//    var valueBl=0
+//    const socket=new wscat ('wss://ropsten.infura.io/ws/v3/672b38a3e2d746f5bd5f24396cb048e9') //использовать web3
+////        request_data ='{ "jsonrpc": "2.0", "method": "eth_blockNumber", "params": [], "id": 1}'
+//    request_data =' {"jsonrpc":"2.0", "id": 1, "method": "eth_subscribe", "params": ["newHeads"]}'
+//
+//    var res=web3.eth.getTransactionReceipt(blhash).then((value)=>{
+////        console.log(value)
+//        var valTr=parseInt(value.blockNumber)
+//        socket.on("open", function open() {
+//            socket.send(request_data);
+//    });
+//
+//       socket.on("message", function incoming(message) {
+//            var mes=JSON.parse(message)
+//            var params=mes['params']
+//            console.log(valTr)
+//            try{
+//               valueBl=params['result']['number']
+//
+//                val_current_bl=parseInt(valueBl,16)
+//                console.log(val_current_bl, valTr )
+//                console.log(val_current_bl-valTr )
+//                if (val_current_bl-valTr >= 3) {
+//                    console.log("Success!")
+//                }
+//            }
+//            catch{
+//                console.log('Идет проверка...')
+//            }
+//            });
+//
+//    })
+//}
+
+
+
+
+
+
+
+
 
 
 
